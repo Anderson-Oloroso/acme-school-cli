@@ -1,0 +1,36 @@
+{
+  "name": "acme-school-cli",
+  "version": "1.0.0",
+  "description": "Proyecto de refuerzo node.js",
+  "keywords": [
+    "project",
+    "node.js",
+    "cli",
+    "db",
+    "mysql",
+    "dotenv",
+    "readline",
+    "school"
+  ],
+  "homepage": "https://github.com/Anderson-Oloroso/acme-school-cli#readme",
+  "bugs": {
+    "url": "https://github.com/Anderson-Oloroso/acme-school-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anderson-Oloroso/acme-school-cli.git"
+  },
+  "author": "Anderson-Oloroso",
+  "type": "module",
+  "main": "src/app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "mysql2": "^3.24.5"
+  }
+}
