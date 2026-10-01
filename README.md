@@ -4,7 +4,7 @@ Aplicación de consola (CLI) desarrollada en **Node.js** y **MySQL** para la adm
 
 ---
 
-## 🏛️ Arquitectura y Patrones de Diseño
+## Arquitectura y Patrones de Diseño
 
 El proyecto implementa una arquitectura limpia y modular basada en principios **SOLID** y patrones de diseño reconocidos:
 
@@ -22,7 +22,7 @@ acme-school-cli/
 │       └── MER_Acme_School.png    # Diagrama Entidad-Relación
 ├── src/
 │   ├── config/
-│   │   └── database.js            # Conexión/Pool a MySQL con mysql2/promise
+│   │   └── database.js            # Conexión singleton a MySQL con mysql2
 │   ├── models/                    # POO, Herencia y Factory Method
 │   │   ├── BaseEntity.js          # Clase base con ID y serialización
 │   │   ├── Person.js              # Clase base para personas (firstName, lastName, DPI, email)
@@ -81,7 +81,15 @@ acme-school-cli/
 
 ---
 
-## 🚀 Requisitos e Instalación
+## Modelo Entidad-Relación (MER)
+
+El siguiente diagrama representa las entidades principales del sistema y las relaciones entre ellas:
+
+![Diagrama Entidad-Relación de ACME School](docs/diagrams/MER_Acme_School.png)
+
+---
+
+## Requisitos e Instalación
 
 ### 1. Requisitos Previos
 - Node.js (v18 o superior)
@@ -115,7 +123,7 @@ npm run dev
 
 ---
 
-## 📊 Módulos y Funcionalidades
+## Módulos y Funcionalidades
 
 - **Gestión de Estudiantes**: Registro, listado con ciudad y documento, actualización y eliminación.
 - **Gestión de Docentes**: Control de profesores vinculados a tipos de identificación.
@@ -128,3 +136,10 @@ npm run dev
   3. Lista de estudiantes inscritos por curso.
   4. Temas pertenecientes a un curso específico.
   5. Calificaciones y notas de estudiantes por curso.
+
+---
+
+## Información del Proyecto
+
+- Creador: Anderson-Oloroso
+- Última modificación: 2026-10-01
