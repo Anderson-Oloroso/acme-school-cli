@@ -1,6 +1,6 @@
 import { clear, showBanner, showWarning } from '../utils/ui.js';
 import { ask, pause, closeReadline } from '../utils/readline.js';
-import pool from '../config/database.js';
+import connection from '../config/database.js';
 
 import { StudentCommand } from './StudentCommand.js';
 import { TeacherCommand } from './TeacherCommand.js';
@@ -14,9 +14,6 @@ import { IdentificationTypeCommand } from './IdentificationTypeCommand.js';
 import { CityCommand } from './CityCommand.js';
 import { ReportsCommand } from './ReportsCommand.js';
 
-/**
- * Menú Principal de la aplicación ACME School CLI
- */
 export class MainMenuCommand {
   constructor() {
     this.commands = {
@@ -55,7 +52,7 @@ export class MainMenuCommand {
 
       if (opt === '0') {
         console.log('\nCerrando conexión y saliendo del sistema. ¡Hasta luego!\n');
-        await pool.end();
+        await connection.end();
         closeReadline();
         return;
       }

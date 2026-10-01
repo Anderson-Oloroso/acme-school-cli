@@ -1,8 +1,5 @@
 import { BaseEntity } from './BaseEntity.js';
 
-/**
- * Clase base Person para reutilizar atributos comunes (Estudiante, Docente)
- */
 export class Person extends BaseEntity {
   constructor(data = {}) {
     super(data.id);

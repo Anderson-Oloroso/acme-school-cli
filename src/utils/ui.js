@@ -1,7 +1,3 @@
-/**
- * Utilidades de interfaz de usuario de consola
- */
-
 export function clear() {
   console.clear();
 }

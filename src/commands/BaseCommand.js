@@ -1,24 +1,13 @@
 import { clear, showHeader, showTable, showSuccess, showError, showWarning } from '../utils/ui.js';
 import { ask, pause } from '../utils/readline.js';
 
-/**
- * Plantilla base para menús CRUD usando Template Method y Command Pattern
- */
 export class BaseCommand {
-  /**
-   * @param {string} title - Título del menú
-   * @param {string} entityName - Nombre singular de la entidad (ej: 'Estudiante')
-   * @param {Object} service - Instancia del servicio correspondiente
-   */
   constructor(title, entityName, service) {
     this.title = title;
     this.entityName = entityName;
     this.service = service;
   }
 
-  /**
-   * Método principal que ejecuta el ciclo del menú (Template Method)
-   */
   async execute() {
     while (true) {
       clear();
@@ -39,9 +28,6 @@ export class BaseCommand {
     }
   }
 
-  /**
-   * Imprime las opciones del menú. Puede ser sobrescrito para opciones adicionales.
-   */
   printMenuOptions() {
     console.log(`1. Registrar ${this.entityName}`);
     console.log(`2. Listar ${this.entityName}s`);
@@ -50,11 +36,6 @@ export class BaseCommand {
     console.log('0. Regresar');
   }
 
-  /**
-   * Manejador de opciones por defecto
-   * @param {string} opt 
-   * @returns {Promise<boolean>}
-   */
   async handleOption(opt) {
     switch (opt) {
       case '1':
@@ -74,9 +55,6 @@ export class BaseCommand {
     }
   }
 
-  /**
-   * Paso para crear un registro
-   */
   async create() {
     clear();
     showHeader(this.title, `Registrar ${this.entityName}`);
@@ -92,9 +70,6 @@ export class BaseCommand {
     await pause();
   }
 
-  /**
-   * Paso para listar registros
-   */
   async list() {
     clear();
     showHeader(this.title, `Listado de ${this.entityName}s`);
@@ -107,9 +82,6 @@ export class BaseCommand {
     await pause();
   }
 
-  /**
-   * Paso para actualizar un registro
-   */
   async update() {
     clear();
     showHeader(this.title, `Actualizar ${this.entityName}`);
@@ -139,9 +111,6 @@ export class BaseCommand {
     await pause();
   }
 
-  /**
-   * Paso para eliminar un registro
-   */
   async delete() {
     clear();
     showHeader(this.title, `Eliminar ${this.entityName}`);
@@ -167,23 +136,14 @@ export class BaseCommand {
     await pause();
   }
 
-  /**
-   * Obtiene los registros para listar (puede ser sobrescrito para consultas con joins)
-   */
   async fetchListRecords() {
     return await this.service.getAll();
   }
 
-  /**
-   * Solicita los campos necesarios para crear
-   */
   async promptCreateData() {
     throw new Error('Debe implementar el método promptCreateData() en la subclase.');
   }
 
-  /**
-   * Solicita los campos necesarios para actualizar
-   */
   async promptUpdateData(existing) {
     throw new Error('Debe implementar el método promptUpdateData() en la subclase.');
   }

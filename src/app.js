@@ -3,9 +3,6 @@ import { MainMenuCommand } from './commands/MainMenuCommand.js';
 import { clear, showBanner, showError } from './utils/ui.js';
 import { closeReadline, pause } from './utils/readline.js';
 
-/**
- * Punto de entrada principal de la aplicación ACME School CLI
- */
 async function main() {
   clear();
   showBanner();

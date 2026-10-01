@@ -9,9 +9,6 @@ import { City } from './City.js';
 import { Inscription } from './Inscription.js';
 import { Rate } from './Rate.js';
 
-/**
- * Patrón Factory Method para instanciar entidades dinámicamente
- */
 export class EntityFactory {
   static create(type, data = {}) {
     const normalizedType = String(type).toLowerCase().replace(/[-_]/g, '');

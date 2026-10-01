@@ -1,10 +1,7 @@
-import pool from '../config/database.js';
+import connection from '../config/database.js';
 import { clear, showHeader, showTable, showError } from '../utils/ui.js';
 import { ask, pause } from '../utils/readline.js';
 
-/**
- * Módulo de Consultas y Reportes Académicos (DQL)
- */
 export class ReportsCommand {
   async execute() {
     while (true) {
@@ -44,9 +41,6 @@ export class ReportsCommand {
     }
   }
 
-  /**
-   * 1. Consultar estudiantes con su ciudad y tipo de documento
-   */
   async reportStudentsWithCityAndId() {
     clear();
     showHeader('REPORTE 1: ESTUDIANTES CON CIUDAD Y TIPO DE DOCUMENTO');
@@ -62,7 +56,7 @@ export class ReportsCommand {
         INNER JOIN identification_types it ON s.identification_type_id = it.id
         INNER JOIN cities c ON s.city_id = c.id
       `;
-      const [rows] = await pool.query(sql);
+      const [rows] = await connection.query(sql);
       showTable(rows);
     } catch (error) {
       showError(`Error al consultar reporte: ${error.message}`);
@@ -70,9 +64,6 @@ export class ReportsCommand {
     await pause();
   }
 
-  /**
-   * 2. Consultar la oferta de cursos programados con profesor y aula asignada
-   */
   async reportScheduledCourses() {
     clear();
     showHeader('REPORTE 2: OFERTA DE CURSOS PROGRAMADOS');
@@ -92,7 +83,7 @@ export class ReportsCommand {
         INNER JOIN classrooms cl ON cs.classroom_id = cl.id
         WHERE cs.active = 1
       `;
-      const [rows] = await pool.query(sql);
+      const [rows] = await connection.query(sql);
       showTable(rows);
     } catch (error) {
       showError(`Error al consultar reporte: ${error.message}`);
@@ -100,9 +91,6 @@ export class ReportsCommand {
     await pause();
   }
 
-  /**
-   * 3. Consultar la lista de estudiantes inscritos por cada curso
-   */
   async reportStudentsByCourse() {
     clear();
     showHeader('REPORTE 3: ESTUDIANTES INSCRITOS POR CURSO');
@@ -118,7 +106,7 @@ export class ReportsCommand {
         INNER JOIN students s ON i.student_id = s.id
         WHERE i.active = 1
       `;
-      const [rows] = await pool.query(sql);
+      const [rows] = await connection.query(sql);
       showTable(rows);
     } catch (error) {
       showError(`Error al consultar reporte: ${error.message}`);
@@ -126,9 +114,6 @@ export class ReportsCommand {
     await pause();
   }
 
-  /**
-   * 4. Consultar los temas pertenecientes a un curso específico
-   */
   async reportTopicsByCourse() {
     clear();
     showHeader('REPORTE 4: TEMAS POR CURSO');
@@ -146,7 +131,7 @@ export class ReportsCommand {
         WHERE tp.active = 1
         AND co.code = ?
       `;
-      const [rows] = await pool.execute(sql, [courseCode]);
+      const [rows] = await connection.execute(sql, [courseCode]);
       if (rows.length === 0) {
         console.log(`\nNo se encontraron temas para el curso "${courseCode}".`);
       } else {
@@ -158,9 +143,6 @@ export class ReportsCommand {
     await pause();
   }
 
-  /**
-   * 5. Consultar las notas/calificaciones de cada estudiante con el nombre del curso
-   */
   async reportRatesWithCourseAndStudent() {
     clear();
     showHeader('REPORTE 5: NOTAS Y CALIFICACIONES');
@@ -177,7 +159,7 @@ export class ReportsCommand {
         INNER JOIN courses_schedules cs ON i.course_schedule_id = cs.id
         INNER JOIN courses co ON cs.course_id = co.id
       `;
-      const [rows] = await pool.query(sql);
+      const [rows] = await connection.query(sql);
       showTable(rows);
     } catch (error) {
       showError(`Error al consultar reporte: ${error.message}`);

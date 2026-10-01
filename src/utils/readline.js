@@ -6,13 +6,6 @@ export const rl = createInterface({
   output: stdout
 });
 
-/**
- * Realiza una pregunta por consola con soporte opcional de validación y valor por defecto
- * @param {string} question - Texto de la pregunta
- * @param {Function} [validator] - Función validadora que retorna string si hay error o null si es válido
- * @param {string|number} [defaultValue] - Valor por defecto si se presiona ENTER
- * @returns {Promise<string>}
- */
 export async function ask(question, validator = null, defaultValue = null) {
   const prompt = defaultValue !== null && defaultValue !== undefined
     ? `${question} [${defaultValue}]: `
@@ -34,20 +27,10 @@ export async function ask(question, validator = null, defaultValue = null) {
   }
 }
 
-/**
- * Pausa la ejecución de la consola hasta que el usuario presione ENTER
- * @param {string} [message]
- */
 export async function pause(message = 'Presione una tecla para continuar...') {
   await rl.question(`\n${message}`);
 }
 
-/**
- * Solicita una confirmación S/N
- * @param {string} question 
- * @param {boolean} defaultYes 
- * @returns {Promise<boolean>}
- */
 export async function confirm(question, defaultYes = true) {
   const prompt = `${question} (${defaultYes ? 'S/n' : 's/N'}): `;
   const answer = (await rl.question(prompt)).trim().toLowerCase();
