@@ -27,7 +27,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "test"
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "dotenv": "^18.0.4",
