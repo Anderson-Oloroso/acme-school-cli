@@ -24,14 +24,14 @@ export class TopicCommand extends BaseCommand {
     console.log('\nCursos disponibles:');
     courses.forEach(c => console.log(`[ID: ${c.id}] ${c.code} - ${c.description}`));
 
-    const courseId = await ask('\nID del curso al que pertenece el tema', validateInteger('ID de Curso', 1));
+    const course_id = await ask('\nID del curso al que pertenece el tema', validateInteger('ID de Curso', 1));
     const code = await ask('Código del tema (ej. TEMA1)', validateLength('Código', 2, 10));
     const title = await ask('Título del tema', validateRequired('Título'));
     const description = await ask('Descripción o detalle del tema');
     const active = await ask('Estado (1: Activo, 0: Inactivo)', validateActive, '1');
 
     return {
-      courseId: Number(courseId),
+      course_id: Number(course_id),
       code,
       title,
       description,
@@ -40,14 +40,14 @@ export class TopicCommand extends BaseCommand {
   }
 
   async promptUpdateData(existing) {
-    const courseId = await ask('Nuevo ID del curso', validateInteger('ID de Curso', 1), existing.course_id);
+    const course_id = await ask('Nuevo ID del curso', validateInteger('ID de Curso', 1), existing.course_id);
     const code = await ask('Nuevo código del tema', null, existing.code);
     const title = await ask('Nuevo título', null, existing.title);
     const description = await ask('Nueva descripción', null, existing.description);
     const active = await ask('Nuevo estado (1: Activo, 0: Inactivo)', validateActive, existing.active);
 
     return {
-      courseId: Number(courseId),
+      course_id: Number(course_id),
       code,
       title,
       description,

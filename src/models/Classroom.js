@@ -8,16 +8,6 @@ export class Classroom extends BaseEntity {
     this.capacity = Number(data.capacity) || 0;
     this.active = data.active !== undefined ? Number(data.active) : 1;
   }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      code: this.code,
-      description: this.description,
-      capacity: this.capacity,
-      active: this.active
-    };
-  }
 }
 
 export default Classroom;

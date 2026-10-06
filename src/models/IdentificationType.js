@@ -7,15 +7,6 @@ export class IdentificationType extends BaseEntity {
     this.name = data.name || '';
     this.description = data.description || '';
   }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      code: this.code,
-      name: this.name,
-      description: this.description
-    };
-  }
 }
 
 export default IdentificationType;

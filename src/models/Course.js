@@ -9,17 +9,6 @@ export class Course extends BaseEntity {
     this.weight = Number(data.weight) || 0;
     this.active = data.active !== undefined ? Number(data.active) : 1;
   }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      code: this.code,
-      description: this.description,
-      intensity: this.intensity,
-      weight: this.weight,
-      active: this.active
-    };
-  }
 }
 
 export default Course;
