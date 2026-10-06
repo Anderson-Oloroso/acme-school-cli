@@ -9,6 +9,7 @@ import { City } from './City.js';
 import { Inscription } from './Inscription.js';
 import { Rate } from './Rate.js';
 
+// Fabrica dinamica de entidades
 export class EntityFactory {
   static create(type, data = {}) {
     const normalizedType = String(type).toLowerCase().replace(/[-_]/g, '');

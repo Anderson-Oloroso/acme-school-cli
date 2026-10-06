@@ -1,3 +1,5 @@
+// Clase base para las entidades del sistema
+
 export class BaseEntity {
   constructor(id = null) {
     this.id = id !== null && id !== undefined ? Number(id) : null;

@@ -1,5 +1,6 @@
 import { BaseEntity } from './BaseEntity.js';
 
+// Clase base Person para compartir datos de personas
 export class Person extends BaseEntity {
   constructor(data = {}) {
     super(data.id);

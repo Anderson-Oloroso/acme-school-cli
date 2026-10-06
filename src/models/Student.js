@@ -1,5 +1,6 @@
 import { Person } from './Person.js';
 
+// Entidad Student que hereda de Person
 export class Student extends Person {
   constructor(data = {}) {
     super(data);

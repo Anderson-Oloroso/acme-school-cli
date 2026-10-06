@@ -6,6 +6,7 @@ export const rl = createInterface({
   output: stdout
 });
 
+// Pregunta por consola con soporte opcional de validacion y valor por defecto
 export async function ask(question, validator = null, defaultValue = null) {
   const prompt = defaultValue !== null && defaultValue !== undefined
     ? `${question} [${defaultValue}]: `
@@ -27,10 +28,12 @@ export async function ask(question, validator = null, defaultValue = null) {
   }
 }
 
+// Pausa la ejecucion de la consola hasta presionar ENTER
 export async function pause(message = 'Presione una tecla para continuar...') {
   await rl.question(`\n${message}`);
 }
 
+// Solicita una confirmacion S/N
 export async function confirm(question, defaultYes = true) {
   const prompt = `${question} (${defaultYes ? 'S/n' : 's/N'}): `;
   const answer = (await rl.question(prompt)).trim().toLowerCase();
@@ -38,6 +41,7 @@ export async function confirm(question, defaultYes = true) {
   return answer === 's' || answer === 'si' || answer === 'y' || answer === 'yes';
 }
 
+// Cierra la interfaz de readline
 export function closeReadline() {
   rl.close();
 }
