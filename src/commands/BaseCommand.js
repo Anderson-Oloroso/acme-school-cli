@@ -1,6 +1,7 @@
 import { clear, showHeader, showTable, showSuccess, showError, showWarning } from '../utils/ui.js';
 import { ask, pause } from '../utils/readline.js';
 
+// Plantilla base para menus CRUD usando Template Method
 export class BaseCommand {
   constructor(title, entityName, service) {
     this.title = title;
@@ -8,6 +9,7 @@ export class BaseCommand {
     this.service = service;
   }
 
+  // Metodo principal del ciclo del menu
   async execute() {
     while (true) {
       clear();
@@ -28,6 +30,7 @@ export class BaseCommand {
     }
   }
 
+  // Imprime las opciones del menu
   printMenuOptions() {
     console.log(`1. Registrar ${this.entityName}`);
     console.log(`2. Listar ${this.entityName}s`);
@@ -36,6 +39,7 @@ export class BaseCommand {
     console.log('0. Regresar');
   }
 
+  // Manejo de la opcion elegida
   async handleOption(opt) {
     switch (opt) {
       case '1':
@@ -55,6 +59,7 @@ export class BaseCommand {
     }
   }
 
+  // Crear registro
   async create() {
     clear();
     showHeader(this.title, `Registrar ${this.entityName}`);
@@ -70,6 +75,7 @@ export class BaseCommand {
     await pause();
   }
 
+  // Listar registros
   async list() {
     clear();
     showHeader(this.title, `Listado de ${this.entityName}s`);
@@ -82,6 +88,7 @@ export class BaseCommand {
     await pause();
   }
 
+  // Actualizar registro
   async update() {
     clear();
     showHeader(this.title, `Actualizar ${this.entityName}`);
@@ -111,6 +118,7 @@ export class BaseCommand {
     await pause();
   }
 
+  // Eliminar registro
   async delete() {
     clear();
     showHeader(this.title, `Eliminar ${this.entityName}`);
@@ -141,11 +149,11 @@ export class BaseCommand {
   }
 
   async promptCreateData() {
-    throw new Error('Debe implementar el método promptCreateData() en la subclase.');
+    throw new Error('Debe implementar el método promptCreateData()');
   }
 
   async promptUpdateData(existing) {
-    throw new Error('Debe implementar el método promptUpdateData() en la subclase.');
+    throw new Error('Debe implementar el método promptUpdateData()');
   }
 }
 

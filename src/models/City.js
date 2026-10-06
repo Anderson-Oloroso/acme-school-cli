@@ -6,14 +6,6 @@ export class City extends BaseEntity {
     this.code = data.code || '';
     this.name = data.name || '';
   }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      code: this.code,
-      name: this.name
-    };
-  }
 }
 
 export default City;

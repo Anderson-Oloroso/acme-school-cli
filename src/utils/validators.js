@@ -1,3 +1,5 @@
+// Validaciones de entradas de usuario
+
 export const validateRequired = (fieldName = 'Campo') => (value) => {
   if (value === null || value === undefined || String(value).trim() === '') {
     return `El campo "${fieldName}" es obligatorio.`;

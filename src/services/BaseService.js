@@ -1,11 +1,16 @@
-import connection from '../config/database.js';
-import { EntityFactory } from '../models/EntityFactory.js';
+import { getDbConnection } from '../config/database.js';
 
 export class BaseService {
-  constructor(tableName, entityType = null) {
+  constructor(tableName) {
     this.tableName = tableName;
-    this.entityType = entityType;
-    this.db = connection;
+  }
+
+  get db() {
+    const conn = getDbConnection();
+    if (!conn) {
+      throw new Error('No hay conexión activa con MySQL.');
+    }
+    return conn;
   }
 
   async query(sql, params = []) {
@@ -14,68 +19,63 @@ export class BaseService {
   }
 
   async execute(sql, params = []) {
-    const [result] = await this.db.execute(sql, params);
-    return result;
+    try {
+      const [result] = await this.db.execute(sql, params);
+      return result;
+    } catch (error) {
+      this._handleDbError(error);
+    }
   }
 
   async getAll() {
-    const sql = `SELECT * FROM ${this.tableName}`;
-    const [rows] = await this.db.query(sql);
+    const [rows] = await this.db.query(`SELECT * FROM ${this.tableName}`);
     return rows;
   }
 
   async getById(id) {
-    const sql = `SELECT * FROM ${this.tableName} WHERE id = ?`;
-    const [rows] = await this.db.execute(sql, [id]);
-    if (rows.length === 0) return null;
-    return rows[0];
+    const [rows] = await this.db.execute(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
+    return rows[0] || null;
   }
 
   async create(data) {
-    const dbData = this._formatToDb(data);
-    delete dbData.id;
+    const keys = Object.keys(data).filter(k => k !== 'id');
+    const placeholders = keys.map(() => '?').join(', ');
+    const values = keys.map(k => data[k]);
 
-    const columns = Object.keys(dbData);
-    const placeholders = columns.map(() => '?').join(', ');
-    const values = Object.values(dbData);
-
-    const sql = `INSERT INTO ${this.tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
-    const [result] = await this.db.execute(sql, values);
+    const sql = `INSERT INTO ${this.tableName} (${keys.join(', ')}) VALUES (${placeholders})`;
+    const result = await this.execute(sql, values);
     return { insertId: result.insertId };
   }
 
   async update(id, data) {
-    const dbData = this._formatToDb(data);
-    delete dbData.id;
+    const keys = Object.keys(data).filter(k => k !== 'id');
+    if (keys.length === 0) return { affectedRows: 0 };
 
-    const columns = Object.keys(dbData);
-    if (columns.length === 0) return { affectedRows: 0, changedRows: 0 };
-
-    const setClause = columns.map(col => `${col} = ?`).join(', ');
-    const values = [...Object.values(dbData), id];
+    const setClause = keys.map(k => `${k} = ?`).join(', ');
+    const values = [...keys.map(k => data[k]), id];
 
     const sql = `UPDATE ${this.tableName} SET ${setClause} WHERE id = ?`;
-    const [result] = await this.db.execute(sql, values);
-    return { affectedRows: result.affectedRows, changedRows: result.changedRows };
+    const result = await this.execute(sql, values);
+    return { affectedRows: result.affectedRows };
   }
 
   async delete(id) {
     const sql = `DELETE FROM ${this.tableName} WHERE id = ?`;
-    const [result] = await this.db.execute(sql, [id]);
+    const result = await this.execute(sql, [id]);
     return { affectedRows: result.affectedRows };
   }
 
-  _formatToDb(data) {
-    if (!data) return {};
-    const raw = typeof data.toJSON === 'function' ? data.toJSON() : data;
-    const result = {};
-
-    for (const [key, value] of Object.entries(raw)) {
-      if (key === 'fullName') continue;
-      const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
-      result[snakeKey] = value;
+  _handleDbError(error) {
+    if (error.errno === 1451 || error.code === 'ER_ROW_IS_REFERENCED_2') {
+      throw new Error('No se puede eliminar o modificar porque tiene registros asociados (Integridad Referencial).');
     }
-    return result;
+    if (error.errno === 1452 || error.code === 'ER_NO_REFERENCED_ROW_2') {
+      throw new Error('El registro relacionado no existe en la base de datos (Integridad Referencial).');
+    }
+    if (error.errno === 1062 || error.code === 'ER_DUP_ENTRY') {
+      throw new Error('Ya existe un registro con ese valor único (código, documento o email duplicado).');
+    }
+    throw error;
   }
 }
 

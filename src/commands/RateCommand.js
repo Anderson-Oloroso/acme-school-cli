@@ -23,25 +23,25 @@ export class RateCommand extends BaseCommand {
 
     console.log('\n--- Inscripciones disponibles ---');
     inscriptions.forEach(i => console.log(`[ID: ${i.inscripcion_id}] Estudiante: ${i.estudiante} | Curso: ${i.curso}`));
-    const inscriptionId = await ask('\nID de la inscripción a calificar', validateInteger('ID de Inscripción', 1));
+    const inscription_id = await ask('\nID de la inscripción a calificar', validateInteger('ID de Inscripción', 1));
 
     const rate = await ask('Nota / Calificación (0.00 a 100.00)', validateDecimal('Nota', 0, 100));
     const comments = await ask('Observaciones / Comentarios');
 
     return {
-      inscriptionId: Number(inscriptionId),
+      inscription_id: Number(inscription_id),
       rate: Number(rate),
       comments
     };
   }
 
   async promptUpdateData(existing) {
-    const inscriptionId = await ask('Nuevo ID de inscripción', validateInteger('ID de Inscripción', 1), existing.inscription_id);
+    const inscription_id = await ask('Nuevo ID de inscripción', validateInteger('ID de Inscripción', 1), existing.inscription_id);
     const rate = await ask('Nueva nota / calificación (0.00 a 100.00)', validateDecimal('Nota', 0, 100), existing.rate);
     const comments = await ask('Nuevas observaciones', null, existing.comments);
 
     return {
-      inscriptionId: Number(inscriptionId),
+      inscription_id: Number(inscription_id),
       rate: Number(rate),
       comments
     };

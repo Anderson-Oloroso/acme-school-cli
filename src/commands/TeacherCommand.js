@@ -21,37 +21,37 @@ export class TeacherCommand extends BaseCommand {
       return null;
     }
 
-    const firstName = await ask('Nombres', validateRequired('Nombres'));
-    const lastName = await ask('Apellidos', validateRequired('Apellidos'));
+    const first_name = await ask('Nombres', validateRequired('Nombres'));
+    const last_name = await ask('Apellidos', validateRequired('Apellidos'));
 
     console.log('\nTipos de identificación:');
     types.forEach(t => console.log(`[ID: ${t.id}] ${t.code} - ${t.name}`));
-    const identificationTypeId = await ask('\nID del tipo de identificación', validateInteger('Tipo ID', 1));
+    const identification_type_id = await ask('\nID del tipo de identificación', validateInteger('Tipo ID', 1));
 
-    const identificationNumber = await ask('Número de documento / DPI', validateLength('Documento', 4, 20));
+    const identification_number = await ask('Número de documento / DPI', validateLength('Documento', 4, 20));
     const email = await ask('Correo electrónico', validateEmail);
 
     return {
-      firstName,
-      lastName,
-      identificationTypeId: Number(identificationTypeId),
-      identificationNumber,
+      first_name,
+      last_name,
+      identification_type_id: Number(identification_type_id),
+      identification_number,
       email
     };
   }
 
   async promptUpdateData(existing) {
-    const firstName = await ask('Nuevos nombres', null, existing.first_name);
-    const lastName = await ask('Nuevos apellidos', null, existing.last_name);
-    const identificationTypeId = await ask('Nuevo ID de tipo de documento', null, existing.identification_type_id);
-    const identificationNumber = await ask('Nuevo número de documento', null, existing.identification_number);
+    const first_name = await ask('Nuevos nombres', null, existing.first_name);
+    const last_name = await ask('Nuevos apellidos', null, existing.last_name);
+    const identification_type_id = await ask('Nuevo ID de tipo de documento', null, existing.identification_type_id);
+    const identification_number = await ask('Nuevo número de documento', null, existing.identification_number);
     const email = await ask('Nuevo correo electrónico', validateEmail, existing.email);
 
     return {
-      firstName,
-      lastName,
-      identificationTypeId: Number(identificationTypeId),
-      identificationNumber,
+      first_name,
+      last_name,
+      identification_type_id: Number(identification_type_id),
+      identification_number,
       email
     };
   }

@@ -30,44 +30,44 @@ export class CourseScheduleCommand extends BaseCommand {
 
     console.log('\n--- Cursos disponibles ---');
     courses.forEach(c => console.log(`[ID: ${c.id}] ${c.code} - ${c.description}`));
-    const courseId = await ask('\nID del curso', validateInteger('ID de Curso', 1));
+    const course_id = await ask('\nID del curso', validateInteger('ID de Curso', 1));
 
     console.log('\n--- Docentes disponibles ---');
     teachers.forEach(t => console.log(`[ID: ${t.id}] ${t.first_name} ${t.last_name}`));
-    const teacherId = await ask('\nID del docente', validateInteger('ID de Docente', 1));
+    const teacher_id = await ask('\nID del docente', validateInteger('ID de Docente', 1));
 
     console.log('\n--- Aulas disponibles ---');
     classrooms.forEach(cl => console.log(`[ID: ${cl.id}] ${cl.code} (Capacidad: ${cl.capacity})`));
-    const classroomId = await ask('\nID del aula', validateInteger('ID de Aula', 1));
+    const classroom_id = await ask('\nID del aula', validateInteger('ID de Aula', 1));
 
-    const startDate = await ask('Fecha y hora de inicio (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de inicio'));
-    const endDate = await ask('Fecha y hora de finalización (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de fin'));
+    const start_date = await ask('Fecha y hora de inicio (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de inicio'));
+    const end_date = await ask('Fecha y hora de finalización (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de fin'));
     const active = await ask('Estado (1: Activo, 0: Inactivo)', validateActive, '1');
 
     return {
-      courseId: Number(courseId),
-      teacherId: Number(teacherId),
-      classroomId: Number(classroomId),
-      startDate,
-      endDate,
+      course_id: Number(course_id),
+      teacher_id: Number(teacher_id),
+      classroom_id: Number(classroom_id),
+      start_date,
+      end_date,
       active: Number(active)
     };
   }
 
   async promptUpdateData(existing) {
-    const courseId = await ask('Nuevo ID del curso', validateInteger('ID de Curso', 1), existing.course_id);
-    const teacherId = await ask('Nuevo ID del docente', validateInteger('ID de Docente', 1), existing.teacher_id);
-    const classroomId = await ask('Nuevo ID del aula', validateInteger('ID de Aula', 1), existing.classroom_id);
-    const startDate = await ask('Nueva fecha de inicio (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de inicio'), existing.start_date);
-    const endDate = await ask('Nueva fecha de fin (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de fin'), existing.end_date);
+    const course_id = await ask('Nuevo ID del curso', validateInteger('ID de Curso', 1), existing.course_id);
+    const teacher_id = await ask('Nuevo ID del docente', validateInteger('ID de Docente', 1), existing.teacher_id);
+    const classroom_id = await ask('Nuevo ID del aula', validateInteger('ID de Aula', 1), existing.classroom_id);
+    const start_date = await ask('Nueva fecha de inicio (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de inicio'), existing.start_date);
+    const end_date = await ask('Nueva fecha de fin (YYYY-MM-DD HH:mm:ss)', validateDate('Fecha de fin'), existing.end_date);
     const active = await ask('Nuevo estado (1: Activo, 0: Inactivo)', validateActive, existing.active);
 
     return {
-      courseId: Number(courseId),
-      teacherId: Number(teacherId),
-      classroomId: Number(classroomId),
-      startDate,
-      endDate,
+      course_id: Number(course_id),
+      teacher_id: Number(teacher_id),
+      classroom_id: Number(classroom_id),
+      start_date,
+      end_date,
       active: Number(active)
     };
   }
