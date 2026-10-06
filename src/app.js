@@ -1,17 +1,18 @@
-import { testConnection } from './config/database.js';
+import { connectDB } from './config/database.js';
 import { MainMenuCommand } from './commands/MainMenuCommand.js';
 import { clear, showBanner, showError } from './utils/ui.js';
 import { closeReadline, pause } from './utils/readline.js';
 
+// Punto de entrada principal de la aplicacion
 async function main() {
   clear();
   showBanner();
 
   console.log('Iniciando conexión con la base de datos MySQL...');
-  const connected = await testConnection();
+  const connection = await connectDB();
 
-  if (!connected) {
-    console.log('\nVerifique la configuración en el archivo .env y que el servicio de MySQL esté activo.');
+  if (!connection) {
+    console.log('Verifique la configuración en el archivo .env y que el servicio de MySQL esté activo.');
     await pause('Presione ENTER para salir...');
     closeReadline();
     process.exit(1);

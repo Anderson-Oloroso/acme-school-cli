@@ -1,6 +1,6 @@
 import { clear, showBanner, showWarning } from '../utils/ui.js';
 import { ask, pause, closeReadline } from '../utils/readline.js';
-import connection from '../config/database.js';
+import { closeDB } from '../config/database.js';
 
 import { StudentCommand } from './StudentCommand.js';
 import { TeacherCommand } from './TeacherCommand.js';
@@ -14,6 +14,7 @@ import { IdentificationTypeCommand } from './IdentificationTypeCommand.js';
 import { CityCommand } from './CityCommand.js';
 import { ReportsCommand } from './ReportsCommand.js';
 
+// Menu Principal de la aplicacion
 export class MainMenuCommand {
   constructor() {
     this.commands = {
@@ -45,14 +46,14 @@ export class MainMenuCommand {
       console.log('8.  Gestión de Calificaciones / Notas');
       console.log('9.  Gestión de Tipos de Identificación');
       console.log('10. Gestión de Ciudades');
-      console.log('11. Consultas y Reportes Académicos (DQL)');
+      console.log('11. Consultas y Reportes Académicos (DQL y HTML)');
       console.log('0.  Salir del Sistema');
 
       const opt = await ask('-> Elija una opción');
 
       if (opt === '0') {
         console.log('\nCerrando conexión y saliendo del sistema. ¡Hasta luego!\n');
-        await connection.end();
+        await closeDB();
         closeReadline();
         return;
       }
